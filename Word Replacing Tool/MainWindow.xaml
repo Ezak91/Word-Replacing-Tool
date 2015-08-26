@@ -1,0 +1,88 @@
+﻿<Controls:MetroWindow x:Class="Word_Replacing_Tool.MainWindow" 
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        GlowBrush="{DynamicResource AccentColorBrush}"
+        BorderThickness="1"
+        WindowStartupLocation="CenterScreen"
+        Title="PSG"
+        Height="350"
+        Width="525"
+        WindowState="Maximized"
+        ShowIconOnTitleBar="True"
+        ContentRendered="readXMLs">
+    <Grid>
+        <TabControl>
+            <!-- Tab with parameters and generating button-->
+            <TabItem Header="Generator"
+                         Controls:ControlsHelper.HeaderFontSize="18">
+                <Grid>
+                    <!--Datagrid with parameters and values-->
+                    <DataGrid Name="dg_param"
+                              ItemsSource="{Binding}"
+                              Margin="0,0,0,65">
+                    </DataGrid>
+                    <!--Button to save parameter-->
+                    <Button Height="35"
+                        Width="150"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        Margin="0,0,180,10"
+                        Name="btn_SaveParam"
+                        Style="{StaticResource AccentedSquareButtonStyle}" Grid.Column="2"
+                        Click="saveParam">
+                        <TextBlock Text="Parameter speichern"/>
+                    </Button>
+                    <!--Button to generate the spezification-->
+                    <Button Height="35"
+                        Width="150"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        Margin="0,0,10,10"
+                        Name="btn_GenerateTemplate"
+                        Style="{StaticResource AccentedSquareButtonStyle}" Grid.Column="2">
+                        <TextBlock Text="Spezifikation generieren"/>
+                    </Button>
+                </Grid>
+            </TabItem>
+            <!-- Tab with Settings -->
+            <TabItem Header="Einstellungen"
+                     Controls:ControlsHelper.HeaderFontSize="18">
+                <Grid>
+                    <StackPanel Grid.Column="1">
+                        <Label Content="Ausgabepfad:"></Label>
+                        <TextBox Name="tb_OutputPath"></TextBox>
+                        <Label Content="Ausgabemuster:"></Label>
+                        <TextBox Name="tb_OutputPattern">
+                            <TextBox.ToolTip>
+                                <TextBlock>
+                                    %U% fügt den Windowsusername ein
+                                    <LineBreak />
+                                    %D% fügt das aktuelle Datum ein
+                                    <LineBreak />
+                                    %T% fügt das aktuelle Datum ein
+                                    <LineBreak />
+                                    %N% Dateien werden nicht überschrieben sondern durchnummeriert
+                                </TextBlock>
+                            </TextBox.ToolTip>
+                        </TextBox>
+                        <Label Content="Templatefile:"></Label>
+                        <TextBox Name="tb_Templatepath">
+                        </TextBox>
+                    </StackPanel>
+                    <!--Button to save the config-->
+                    <Button Height="35"
+                        Width="150"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        Margin="0,0,10,10"
+                        Name="btn_SaveConfig"
+                        Click="saveSettings"
+                        Style="{StaticResource AccentedSquareButtonStyle}" Grid.Column="2">
+                        <TextBlock Text="Einstellungen speichern"/>
+                    </Button>
+                </Grid>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Controls:MetroWindow>
