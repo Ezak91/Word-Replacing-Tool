@@ -20,22 +20,3 @@ C:\Users\marcs\Desktop\Dokumente\Word Replacing Tool\Word Replacing Tool\obj\Deb
 C:\Users\mszymkowiak\Desktop\Meine Dateien\Source\Allgemein\Word-Replacing-Tool\Word Replacing Tool\bin\Debug\Word Replacing Tool.exe.config
 C:\Users\mszymkowiak\Desktop\Meine Dateien\Source\Allgemein\Word-Replacing-Tool\Word Replacing Tool\obj\Debug\Word Replacing Tool.exe
 C:\Users\mszymkowiak\Desktop\Meine Dateien\Source\Allgemein\Word-Replacing-Tool\Word Replacing Tool\obj\Debug\Word Replacing Tool.pdb
-C:\Users\marcs\Desktop\Dokumente\Git\Word-Replacing-Tool\Word Replacing Tool\bin\Debug\Word Replacing Tool.exe.config
-C:\Users\marcs\Desktop\Dokumente\Git\Word-Replacing-Tool\Word Replacing Tool\obj\Debug\Word Replacing Tool.exe
-C:\Users\marcs\Desktop\Dokumente\Git\Word-Replacing-Tool\Word Replacing Tool\obj\Debug\Word Replacing Tool.pdb
-C:\Users\marcs\Desktop\Dokumente\Git\Word-Replacing-Tool\Word Replacing Tool\bin\Debug\Word Replacing Tool.exe
-C:\Users\marcs\Desktop\Dokumente\Git\Word-Replacing-Tool\Word Replacing Tool\bin\Debug\Word Replacing Tool.pdb
-C:\Users\marcs\Desktop\Dokumente\Git\Word-Replacing-Tool\Word Replacing Tool\bin\Debug\MahApps.Metro.dll
-C:\Users\marcs\Desktop\Dokumente\Git\Word-Replacing-Tool\Word Replacing Tool\bin\Debug\System.Windows.Interactivity.dll
-C:\Users\marcs\Desktop\Dokumente\Git\Word-Replacing-Tool\Word Replacing Tool\bin\Debug\MahApps.Metro.xml
-C:\Users\marcs\Desktop\Dokumente\Git\Word-Replacing-Tool\Word Replacing Tool\obj\Debug\Word Replacing Tool.csprojResolveAssemblyReference.cache
-C:\Users\marcs\Desktop\Dokumente\Git\Word-Replacing-Tool\Word Replacing Tool\obj\Debug\MainWindow.baml
-C:\Users\marcs\Desktop\Dokumente\Git\Word-Replacing-Tool\Word Replacing Tool\obj\Debug\Resources\Icons.baml
-C:\Users\marcs\Desktop\Dokumente\Git\Word-Replacing-Tool\Word Replacing Tool\obj\Debug\App.baml
-C:\Users\marcs\Desktop\Dokumente\Git\Word-Replacing-Tool\Word Replacing Tool\obj\Debug\MainWindow.g.cs
-C:\Users\marcs\Desktop\Dokumente\Git\Word-Replacing-Tool\Word Replacing Tool\obj\Debug\Resources\Icons.g.cs
-C:\Users\marcs\Desktop\Dokumente\Git\Word-Replacing-Tool\Word Replacing Tool\obj\Debug\App.g.cs
-C:\Users\marcs\Desktop\Dokumente\Git\Word-Replacing-Tool\Word Replacing Tool\obj\Debug\Word Replacing Tool_MarkupCompile.cache
-C:\Users\marcs\Desktop\Dokumente\Git\Word-Replacing-Tool\Word Replacing Tool\obj\Debug\Word Replacing Tool.g.resources
-C:\Users\marcs\Desktop\Dokumente\Git\Word-Replacing-Tool\Word Replacing Tool\obj\Debug\Word_Replacing_Tool.Properties.Resources.resources
-C:\Users\marcs\Desktop\Dokumente\Git\Word-Replacing-Tool\Word Replacing Tool\obj\Debug\Word Replacing Tool.csproj.GenerateResource.Cache
