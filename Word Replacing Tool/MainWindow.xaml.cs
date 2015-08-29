@@ -27,6 +27,7 @@ namespace Word_Replacing_Tool
         public DataTable dt_params = new DataTable();
         public DataTable dt_settings = new DataTable();
         public DataTable dt_attributes = new DataTable();
+        public DataTable dt_customAttributes = new DataTable();
 
         public MainWindow()
         {
@@ -37,6 +38,7 @@ namespace Word_Replacing_Tool
         {
             readParam(sender, e);
             readAttributes();
+            readCustomAttributes();
             readSettings();
         }
 
@@ -213,6 +215,47 @@ namespace Word_Replacing_Tool
             dg_attributes.DataContext = dt_attributes.DefaultView;
         }
 
+        private void readCustomAttributes()
+        {
+            string customAttributesFile = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Word Replacing Tool\custom_attributes.xml";
+            if (File.Exists(customAttributesFile))
+            {
+                DataSet ds_customAttributes = new DataSet();
+                ds_customAttributes.ReadXml(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Word Replacing Tool\custom_attributes.xml");
+                if (ds_customAttributes.Tables.Count == 0)
+                {
+                    dt_customAttributes.TableName = "Custom Attributes";
+                    dt_customAttributes.Columns.Add("Custom Attributes Key");
+                    dt_customAttributes.Columns.Add("Custom Attributes Value");
+                }
+                else
+                {
+                    dt_customAttributes = ds_customAttributes.Tables["Custom Attributes"];
+                }
+                dg_customAttributes.DataContext = dt_customAttributes.DefaultView;
+            }
+            else
+            {
+                ShowMessage("Keine Parameter gefunden", "Die Xml Datei mit den Parametern konnte nicht gefunden werden, die Standartparameter werden geladen");
+                createMainCustomAttributes();
+            }
+        }
+
+        private void createMainCustomAttributes()
+        {
+            dt_customAttributes.TableName = "Custom Attributes";
+            dt_customAttributes.Columns.Add("Custom Attributes Key");
+            dt_customAttributes.Columns.Add("Custom Attributes Value");
+
+            if (!Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Word Replacing Tool"))
+            {
+                Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Word Replacing Tool");
+            }
+
+            dt_customAttributes.WriteXml(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Word Replacing Tool\custom_attributes.xml");
+            dg_customAttributes.DataContext = dt_customAttributes.DefaultView;
+        }
+
         private void saveParam(object sender, RoutedEventArgs e)
         {
             dt_params.WriteXml(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Word Replacing Tool\parameter.xml");
@@ -232,6 +275,12 @@ namespace Word_Replacing_Tool
         {
             dt_attributes.WriteXml(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Word Replacing Tool\attributes.xml");
             ShowMessage("Gespeichert", "Die Eigenschaften wurden gespeichert");
+        }
+
+        private void saveCustomAttributes(object sender, RoutedEventArgs e)
+        {
+            dt_customAttributes.WriteXml(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Word Replacing Tool\custom_attributes.xml");
+            ShowMessage("Gespeichert", "Die benutzderdefinierten Eigenschaften wurden gespeichert");
         }
     }
 }
