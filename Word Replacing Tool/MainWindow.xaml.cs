@@ -236,7 +236,6 @@ namespace Word_Replacing_Tool
             }
             else
             {
-                ShowMessage("Keine Parameter gefunden", "Die Xml Datei mit den Parametern konnte nicht gefunden werden, die Standartparameter werden geladen");
                 createMainCustomAttributes();
             }
         }
