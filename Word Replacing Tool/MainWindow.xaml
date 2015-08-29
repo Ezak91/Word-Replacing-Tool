@@ -45,6 +45,27 @@
                     </Button>
                 </Grid>
             </TabItem>
+            <TabItem Header="Eigenschaften"
+                         Controls:ControlsHelper.HeaderFontSize="18">
+                <Grid>
+                    <!--Datagrid with parameters and values-->
+                    <DataGrid Name="dg_attributes"
+                              ItemsSource="{Binding}"
+                              Margin="0,0,0,65">
+                    </DataGrid>
+                    <!--Button to save parameter-->
+                    <Button Height="35"
+                        Width="150"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        Margin="0,0,180,10"
+                        Name="btn_SaveAttributes"
+                        Style="{StaticResource AccentedSquareButtonStyle}" Grid.Column="2"
+                        Click="saveAttributes">
+                        <TextBlock Text="Eigenschaften speichern"/>
+                    </Button>
+                </Grid>
+            </TabItem>            
             <!-- Tab with Settings -->
             <TabItem Header="Einstellungen"
                      Controls:ControlsHelper.HeaderFontSize="18">

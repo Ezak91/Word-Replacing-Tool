@@ -26,6 +26,7 @@ namespace Word_Replacing_Tool
     {
         public DataTable dt_params = new DataTable();
         public DataTable dt_settings = new DataTable();
+        public DataTable dt_attributes = new DataTable();
 
         public MainWindow()
         {
@@ -35,6 +36,7 @@ namespace Word_Replacing_Tool
         private void readXMLs(object sender, EventArgs e)
         {
             readParam(sender, e);
+            readAttributes();
             readSettings();
         }
 
@@ -135,6 +137,82 @@ namespace Word_Replacing_Tool
             tb_Templatepath.Text = dt_settings.Rows[2][1].ToString();
         }
 
+        private void readAttributes()
+        {
+            string attributesFile = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Word Replacing Tool\attributes.xml";
+            if (File.Exists(attributesFile))
+            {
+                DataSet ds_attributes = new DataSet();
+                ds_attributes.ReadXml(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Word Replacing Tool\attributes.xml");
+                dt_attributes = ds_attributes.Tables["Attributes"];
+                dg_attributes.DataContext = dt_attributes.DefaultView;
+            }
+            else
+            {
+                createMainAttributes();
+            }
+        }
+
+        private void createMainAttributes()
+        {
+            dt_attributes.TableName = "Attributes";
+            dt_attributes.Columns.Add("Attributes Key");
+            dt_attributes.Columns.Add("Attributes Value");
+
+            DataRow row = dt_attributes.NewRow();
+            row[0] = "Titel";
+            row[1] = String.Empty;
+            dt_attributes.Rows.Add(row);
+
+            row = dt_attributes.NewRow();
+            row[0] = "Thema";
+            row[1] = String.Empty;
+            dt_attributes.Rows.Add(row);
+
+            row = dt_attributes.NewRow();
+            row[0] = "Autor";
+            row[1] = String.Empty;
+            dt_attributes.Rows.Add(row);
+
+            row = dt_attributes.NewRow();
+            row[0] = "Manager";
+            row[1] = String.Empty;
+            dt_attributes.Rows.Add(row);
+
+            row = dt_attributes.NewRow();
+            row[0] = "Firma";
+            row[1] = String.Empty;
+            dt_attributes.Rows.Add(row);
+
+            row = dt_attributes.NewRow();
+            row[0] = "Kategorie";
+            row[1] = String.Empty;
+            dt_attributes.Rows.Add(row);
+
+            row = dt_attributes.NewRow();
+            row[0] = "Stichwörter";
+            row[1] = String.Empty;
+            dt_attributes.Rows.Add(row);
+
+            row = dt_attributes.NewRow();
+            row[0] = "Kommentare";
+            row[1] = String.Empty;
+            dt_attributes.Rows.Add(row);
+
+            row = dt_attributes.NewRow();
+            row[0] = "Linkbasis";
+            row[1] = String.Empty;
+            dt_attributes.Rows.Add(row);
+
+            if (!Directory.Exists(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Word Replacing Tool"))
+            {
+                Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Word Replacing Tool");
+            }
+
+            dt_attributes.WriteXml(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Word Replacing Tool\attributes.xml");
+            dg_attributes.DataContext = dt_attributes.DefaultView;
+        }
+
         private void saveParam(object sender, RoutedEventArgs e)
         {
             dt_params.WriteXml(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Word Replacing Tool\parameter.xml");
@@ -150,5 +228,10 @@ namespace Word_Replacing_Tool
             ShowMessage("Gespeichert", "Die Einstellungen wurden gespeichert");
         }
 
+        private void saveAttributes(object sender, RoutedEventArgs e)
+        {
+            dt_attributes.WriteXml(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Word Replacing Tool\attributes.xml");
+            ShowMessage("Gespeichert", "Die Eigenschaften wurden gespeichert");
+        }
     }
 }
