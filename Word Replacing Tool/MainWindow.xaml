@@ -33,16 +33,6 @@
                         Click="saveParam">
                         <TextBlock Text="Parameter speichern"/>
                     </Button>
-                    <!--Button to generate the spezification-->
-                    <Button Height="35"
-                        Width="150"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Bottom"
-                        Margin="0,0,10,10"
-                        Name="btn_GenerateTemplate"
-                        Style="{StaticResource AccentedSquareButtonStyle}" Grid.Column="2">
-                        <TextBlock Text="Spezifikation generieren"/>
-                    </Button>
                 </Grid>
             </TabItem>
             <TabItem Header="Eigenschaften"
@@ -118,7 +108,7 @@
                         Width="150"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Bottom"
-                        Margin="0,0,10,10"
+                        Margin="0,0,180,10"
                         Name="btn_SaveConfig"
                         Click="saveSettings"
                         Style="{StaticResource AccentedSquareButtonStyle}" Grid.Column="2">
@@ -127,5 +117,15 @@
                 </Grid>
             </TabItem>
         </TabControl>
+        <!--Button to generate the spezification-->
+        <Button Height="35"
+                        Width="150"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        Margin="0,0,10,12"
+                        Name="btn_GenerateTemplate"
+                        Style="{StaticResource AccentedSquareButtonStyle}" Grid.Column="2">
+            <TextBlock Text="Spezifikation generieren"/>
+        </Button>
     </Grid>
 </Controls:MetroWindow>
