@@ -14,7 +14,7 @@
     <Grid>
         <TabControl>
             <!-- Tab with parameters and generating button-->
-            <TabItem Header="Generator"
+            <TabItem Header="Parameter"
                          Controls:ControlsHelper.HeaderFontSize="18">
                 <Grid>
                     <!--Datagrid with parameters and values-->
