@@ -17,6 +17,3 @@ C:\Users\marcs\Desktop\Dokumente\Word Replacing Tool\Word Replacing Tool\obj\Deb
 C:\Users\marcs\Desktop\Dokumente\Word Replacing Tool\Word Replacing Tool\obj\Debug\Word Replacing Tool.csproj.GenerateResource.Cache
 C:\Users\marcs\Desktop\Dokumente\Word Replacing Tool\Word Replacing Tool\obj\Debug\Word Replacing Tool.exe
 C:\Users\marcs\Desktop\Dokumente\Word Replacing Tool\Word Replacing Tool\obj\Debug\Word Replacing Tool.pdb
-C:\Users\mszymkowiak\Desktop\Meine Dateien\Source\Allgemein\Word-Replacing-Tool\Word Replacing Tool\bin\Debug\Word Replacing Tool.exe.config
-C:\Users\mszymkowiak\Desktop\Meine Dateien\Source\Allgemein\Word-Replacing-Tool\Word Replacing Tool\obj\Debug\Word Replacing Tool.exe
-C:\Users\mszymkowiak\Desktop\Meine Dateien\Source\Allgemein\Word-Replacing-Tool\Word Replacing Tool\obj\Debug\Word Replacing Tool.pdb

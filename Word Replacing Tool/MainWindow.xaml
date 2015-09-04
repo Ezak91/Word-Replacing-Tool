@@ -124,7 +124,9 @@
                         VerticalAlignment="Bottom"
                         Margin="0,0,10,12"
                         Name="btn_GenerateTemplate"
-                        Style="{StaticResource AccentedSquareButtonStyle}" Grid.Column="2">
+                        Style="{StaticResource AccentedSquareButtonStyle}"
+                        Grid.Column="2"
+                        Click="generateTemplate">
             <TextBlock Text="Spezifikation generieren"/>
         </Button>
     </Grid>

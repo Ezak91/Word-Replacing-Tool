@@ -16,6 +16,11 @@ using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using System.Data;
 using System.IO;
+using Microsoft.Office.Core;
+using word = Microsoft.Office.Interop;
+using System.Runtime.InteropServices;
+using System.Reflection;
+
 
 namespace Word_Replacing_Tool
 {
@@ -28,6 +33,8 @@ namespace Word_Replacing_Tool
         public DataTable dt_settings = new DataTable();
         public DataTable dt_attributes = new DataTable();
         public DataTable dt_customAttributes = new DataTable();
+        public Microsoft.Office.Interop.Word.Application oWord;
+        public Microsoft.Office.Interop.Word._Document oDoc;
 
         public MainWindow()
         {
@@ -54,7 +61,7 @@ namespace Word_Replacing_Tool
             {
                 DataSet ds_params = new DataSet();
                 ds_params.ReadXml(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Word Replacing Tool\parameter.xml");
-                if(ds_params.Tables.Count == 0)
+                if (ds_params.Tables.Count == 0)
                 {
                     dt_params.TableName = "Parameter";
                     dt_params.Columns.Add("Parameter Key");
@@ -162,17 +169,17 @@ namespace Word_Replacing_Tool
             dt_attributes.Columns.Add("Attributes Value");
 
             DataRow row = dt_attributes.NewRow();
-            row[0] = "Titel";
+            row[0] = "Title";
             row[1] = String.Empty;
             dt_attributes.Rows.Add(row);
 
             row = dt_attributes.NewRow();
-            row[0] = "Thema";
+            row[0] = "Subject";
             row[1] = String.Empty;
             dt_attributes.Rows.Add(row);
 
             row = dt_attributes.NewRow();
-            row[0] = "Autor";
+            row[0] = "Author";
             row[1] = String.Empty;
             dt_attributes.Rows.Add(row);
 
@@ -182,27 +189,22 @@ namespace Word_Replacing_Tool
             dt_attributes.Rows.Add(row);
 
             row = dt_attributes.NewRow();
-            row[0] = "Firma";
+            row[0] = "Company";
             row[1] = String.Empty;
             dt_attributes.Rows.Add(row);
 
             row = dt_attributes.NewRow();
-            row[0] = "Kategorie";
+            row[0] = "Category";
             row[1] = String.Empty;
             dt_attributes.Rows.Add(row);
 
             row = dt_attributes.NewRow();
-            row[0] = "Stichwörter";
+            row[0] = "Keywords";
             row[1] = String.Empty;
             dt_attributes.Rows.Add(row);
 
             row = dt_attributes.NewRow();
-            row[0] = "Kommentare";
-            row[1] = String.Empty;
-            dt_attributes.Rows.Add(row);
-
-            row = dt_attributes.NewRow();
-            row[0] = "Linkbasis";
+            row[0] = "Comments";
             row[1] = String.Empty;
             dt_attributes.Rows.Add(row);
 
@@ -281,5 +283,146 @@ namespace Word_Replacing_Tool
             dt_customAttributes.WriteXml(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Word Replacing Tool\custom_attributes.xml");
             ShowMessage("Gespeichert", "Die benutzderdefinierten Eigenschaften wurden gespeichert");
         }
+
+        private void generateTemplate(object sender, RoutedEventArgs e)
+        {
+            string newFilename = getNewFilename();
+            openFile(createFile(newFilename));
+            addCustomDocumentPropertys();
+            replaceParam();
+            addAttributes();
+            closeFile();
+        }
+
+        private string getNewFilename()
+        {
+            string fileExtension = System.IO.Path.GetExtension(dt_settings.Rows[2][1].ToString());
+            string newFilename = dt_settings.Rows[1][1].ToString();
+            newFilename = newFilename.Replace("%U%", Environment.UserName);
+            newFilename = newFilename.Replace("%D%", String.Format("{0:MM_dd_yyyy}", DateTime.Now));
+            newFilename = newFilename.Replace("%T%", String.Format("{0:mm_ss}", DateTime.Now));
+            if (newFilename.Contains("%N%"))
+            {
+                int i = 0;
+                while (File.Exists(System.IO.Path.GetDirectoryName(dt_settings.Rows[2][1].ToString()) + @"\" + newFilename.Replace("%N%", i.ToString())))
+                {
+                    i++;
+                }
+                newFilename = newFilename.Replace("%N%", i.ToString());
+            }
+            newFilename = newFilename + fileExtension;
+            return newFilename;
+        }
+
+        private string createFile(string newFilename)
+        {
+            string templateFile = dt_settings.Rows[2][1].ToString();
+            string newFile = System.IO.Path.GetDirectoryName(dt_settings.Rows[2][1].ToString()) + @"\" + newFilename;
+            File.Copy(templateFile, newFile);
+            return newFile;
+        }
+
+        private void openFile(string newFilename)
+        {
+            oWord = new Microsoft.Office.Interop.Word.Application();
+            oWord.Visible = false;
+            oDoc = oWord.Documents.Open(newFilename, ReadOnly: false, Visible: true);
+        }
+
+        public void addCustomDocumentPropertys()
+        {
+
+            object oMissing = Missing.Value;
+            object oDocBuiltInProps;
+            object oDocCustomProps;
+
+
+            oDocBuiltInProps = oDoc.BuiltInDocumentProperties;
+            Type typeDocBuiltInProps = oDocBuiltInProps.GetType();
+
+            //Get the Author property and display it.
+            string strIndex = String.Empty;
+            string strValue;
+
+            oDocCustomProps = oDoc.CustomDocumentProperties;
+            Type typeDocCustomProps = oDocCustomProps.GetType();
+
+            foreach (DataRow row in dt_customAttributes.Rows)
+            {
+                strIndex = row[0].ToString();
+                strValue = row[1].ToString();
+                object[] oArgs = {strIndex,false,
+                     MsoDocProperties.msoPropertyTypeString,
+                     strValue};
+
+                typeDocCustomProps.InvokeMember("Add", BindingFlags.Default |
+                                           BindingFlags.InvokeMethod, null,
+                                           oDocCustomProps, oArgs);
+            }
+        }
+
+        private void replaceParam()
+        {
+
+            //Microsoft.Office.Interop.Word.Application wordApp = new Microsoft.Office.Interop.Word.Application { Visible = false };
+            //Microsoft.Office.Interop.Word.Document aDoc = wordApp.Documents.Open(newFile, ReadOnly: false, Visible: false);
+            //aDoc.Activate();
+            foreach (DataRow row in dt_params.Rows)
+            {
+                FindAndReplace(oWord, row[0], row[1]);
+            }
+        }
+
+
+        private void FindAndReplace(Microsoft.Office.Interop.Word.Application doc, object findText, object replaceWithText)
+        {
+            object matchCase = false;
+            object matchWholeWord = true;
+            object matchWildCards = false;
+            object matchSoundsLike = false;
+            object matchAllWordForms = false;
+            object forward = true;
+            object format = false;
+            object matchKashida = false;
+            object matchDiacritics = false;
+            object matchAlefHamza = false;
+            object matchControl = false;
+            object read_only = false;
+            object visible = false;
+            object replace = 2;
+            object wrap = 1;
+            doc.Selection.Find.Execute(ref findText, ref matchCase, ref matchWholeWord,
+                ref matchWildCards, ref matchSoundsLike, ref matchAllWordForms, ref forward, ref wrap, ref format, ref replaceWithText, ref replace,
+                ref matchKashida, ref matchDiacritics, ref matchAlefHamza, ref matchControl);
+        }
+
+        private void addAttributes()
+        {
+            foreach (DataRow row in dt_attributes.Rows)
+                try
+                {
+                    SetWordDocumentPropertyValue(oDoc, row[0].ToString(), row[1].ToString());
+                }
+                catch (Exception ex)
+                {
+                    ShowMessage("Fehler", ex.Message);
+                }
+        }
+
+        void SetWordDocumentPropertyValue(Microsoft.Office.Interop.Word._Document document, string propertyName, string propertyValue)
+        {
+            object builtInProperties = document.BuiltInDocumentProperties;
+            Type builtInPropertiesType = builtInProperties.GetType();
+            object property = builtInPropertiesType.InvokeMember("Item", System.Reflection.BindingFlags.GetProperty, null, builtInProperties, new object[] { propertyName });
+            Type propertyType = property.GetType();
+            propertyType.InvokeMember("Value", BindingFlags.SetProperty, null, property, new object[] { propertyValue });
+        }
+
+        public void closeFile()
+        {
+            oDoc.Save();
+            oDoc.Close();
+        }
+
     }
 }
