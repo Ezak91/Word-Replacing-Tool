@@ -292,6 +292,7 @@ namespace Word_Replacing_Tool
             replaceParam();
             addAttributes();
             closeFile();
+            ShowMessage("Erstellt", "Die Datei " + newFilename + " wurde erstellt");
         }
 
         private string getNewFilename()
@@ -300,11 +301,11 @@ namespace Word_Replacing_Tool
             string newFilename = dt_settings.Rows[1][1].ToString();
             newFilename = newFilename.Replace("%U%", Environment.UserName);
             newFilename = newFilename.Replace("%D%", String.Format("{0:MM_dd_yyyy}", DateTime.Now));
-            newFilename = newFilename.Replace("%T%", String.Format("{0:mm_ss}", DateTime.Now));
+            newFilename = newFilename.Replace("%T%", String.Format("{0:hh_mm}", DateTime.Now));
             if (newFilename.Contains("%N%"))
             {
                 int i = 0;
-                while (File.Exists(System.IO.Path.GetDirectoryName(dt_settings.Rows[2][1].ToString()) + @"\" + newFilename.Replace("%N%", i.ToString())))
+                while (File.Exists(dt_settings.Rows[0][1].ToString() + @"\" + newFilename.Replace("%N%", i.ToString()) + fileExtension))
                 {
                     i++;
                 }
@@ -317,7 +318,7 @@ namespace Word_Replacing_Tool
         private string createFile(string newFilename)
         {
             string templateFile = dt_settings.Rows[2][1].ToString();
-            string newFile = System.IO.Path.GetDirectoryName(dt_settings.Rows[2][1].ToString()) + @"\" + newFilename;
+            string newFile = dt_settings.Rows[0][1].ToString() + @"\" + newFilename;
             File.Copy(templateFile, newFile);
             return newFile;
         }
@@ -340,7 +341,6 @@ namespace Word_Replacing_Tool
             oDocBuiltInProps = oDoc.BuiltInDocumentProperties;
             Type typeDocBuiltInProps = oDocBuiltInProps.GetType();
 
-            //Get the Author property and display it.
             string strIndex = String.Empty;
             string strValue;
 
@@ -363,10 +363,6 @@ namespace Word_Replacing_Tool
 
         private void replaceParam()
         {
-
-            //Microsoft.Office.Interop.Word.Application wordApp = new Microsoft.Office.Interop.Word.Application { Visible = false };
-            //Microsoft.Office.Interop.Word.Document aDoc = wordApp.Documents.Open(newFile, ReadOnly: false, Visible: false);
-            //aDoc.Activate();
             foreach (DataRow row in dt_params.Rows)
             {
                 FindAndReplace(oWord, row[0], row[1]);
