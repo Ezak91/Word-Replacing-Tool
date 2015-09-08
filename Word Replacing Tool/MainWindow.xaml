@@ -93,7 +93,7 @@
                                     <LineBreak />
                                     %D% fügt das aktuelle Datum ein
                                     <LineBreak />
-                                    %T% fügt das aktuelle Datum ein
+                                    %T% fügt die aktuellen Stunden und Minutenzahl ein
                                     <LineBreak />
                                     %N% Dateien werden nicht überschrieben sondern durchnummeriert
                                 </TextBlock>
@@ -122,12 +122,12 @@
                         Width="150"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Bottom"
-                        Margin="0,0,10,12"
+                        Margin="0,0,10,14"
                         Name="btn_GenerateTemplate"
                         Style="{StaticResource AccentedSquareButtonStyle}"
                         Grid.Column="2"
                         Click="generateTemplate">
-            <TextBlock Text="Spezifikation generieren"/>
+            <TextBlock Text="Dokument generieren"/>
         </Button>
     </Grid>
 </Controls:MetroWindow>
